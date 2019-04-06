@@ -1,0 +1,99 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<%- include('../blocks/header', {bot, user, path}) %>
+<div class="container">
+
+	<div class="row justify-content-md-center">
+		<div align="center"><h2 style="color: #fff;"><i class="fa fa-wrench fa-fw" aria-hidden="true"></i> Giriş Çıkış Sistemi</h2></div>
+  </div>
+	
+  <!--<center><h7 style="color:red">Bakımda...</h7></center>-->
+  
+	<div class="row">
+    
+<div class="col">
+    <div class="container">
+      <form method="post">
+        <ul class="list-group list-group-flush">
+          
+          <center> <h6 style="color: #fff; margin: 5px;">Giriş ve çıkış mesajlarında kullanabileceğiniz bazı kısayollar:<br><br>
+    Kullanıcı adı için: <a style="color:lightgreen">&#123;kullanıcı&#125;</a><br>
+    Sunucu adı için: <a style="color:lightgreen">&#123;sunucu&#125;</a><br>
+    Sunucudaki kişi sayısı için: <a style="color:lightgreen">&#123;kişisayısı&#125;</a><br>terimlerini kullanınız.<br><br>(<a style="color:red">Not:</a> <a style="color:lightgreen">&#123;&#125;</a> işaretleri dahildir!)</li>
+</h6></center>
+          
+            <div class="row">
+            <div class="col-25">
+              <label for="gc">Giriş Çıkış Kanalı</label>
+            </div>
+            <div class="col-75">
+              <select id="gc" name="gc"> 
+           <%if(bot.ayar.has(`gc_${guild.id}`) === false) {%>
+                <option value="" disabled selected>Kanal seçiniz.</option>
+                <%for (var i = 0; i < guild.channels.filter(c => c.type==='text').size; i++){%>
+               
+                <option value="<%=guild.channels.filter(c => c.type==='text').array()[i].name%>">#<%=guild.channels.filter(c => c.type==='text').array()[i].name%></option>
+              <%  } %>
+           <%} else {%>
+               <option value="<%=guild.channels.get(bot.ayar.fetch(`gc_${guild.id}`)).name%>" selected>#<%=guild.channels.get(bot.ayar.fetch(`gc_${guild.id}`)).name%></option>
+              <%for (var i = 0; i < guild.channels.filter(c=>c.id!==bot.ayar.fetch(`gc_${guild.id}`)).filter(c => c.type==='text').size; i++){%>
+               
+                <option value="<%=guild.channels.filter(c=>c.id!==bot.ayar.fetch(`gc_${guild.id}`)).filter(c => c.type==='text').array()[i].name%>">#<%=guild.channels.filter(c=>c.id!==bot.ayar.fetch(`gc_${guild.id}`)).filter(c => c.type==='text').array()[i].name%></option>
+              <%  } %>
+                <%}%>
+              </select>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-25">
+              <label for="girisM">Giriş Mesajı</label>
+            </div>
+            <div class="col-75">
+              
+              <% if (bot.ayar.has(`girisM_${guild.id}`) === false) { %>
+								<input type="text" style="text-align: left; height:100px;" name="girisM" id="girisM"
+									placeholder="Bir mesaj yazınız!">
+              <% } %>
+              
+							<% if(bot.ayar.has(`girisM_${guild.id}`) === true) { %>
+								<input type="text" style="text-align: left; height:100px;" name="girisM" id="girisM" value="<%= bot.ayar.fetch(`girisM_${guild.id}`) %>"
+									placeholder="Bir mesaj yazınız!">
+              <% } %>
+            </div>
+</div>
+
+<div class="row">
+            <div class="col-25">
+              <label for="cikisM">Çıkış Mesajı</label>
+            </div>
+            <div class="col-75">
+              
+              <% if (bot.ayar.has(`cikisM_${guild.id}`) === false) { %>
+								<input type="text" style="text-align: left; height:100px;" name="cikisM" id="cikisM"
+									placeholder="Bir mesaj yazınız!">
+              <% } %>
+              
+							<% if(bot.ayar.has(`cikisM_${guild.id}`) === true) { %>
+								<input type="text" style="text-align: left; height:100px;" name="cikisM" id="cikisM" value="<%= bot.ayar.fetch(`cikisM_${guild.id}`) %>"
+									placeholder="Bir mesaj yazınız!">
+              <% } %>
+            </div>
+</div>
+          
+          </ul>
+          <div style="width: 100%; text-align: right; margin-top: 15px;">
+    <button style="background-color:blue; color:#fff" type="sumbit" id="formbtn" class="btn btn-default"><i class="fa fa-fw fa-save" aria-hidden="true"></i> Kaydet</button>
+          </div>
+      </form>
+    </div>
+  </div>
+    
+</div>
+<% include ../blocks/guild-modals %>
+
+<script>
+	var ts = parseInt($('#guildCreate').text());
+	$('#guildCreate').html(`<strong>Created:</strong>: ${moment(ts).format('MMMM Do YYYY (h:mm a)')}`);  
+</script>
+<% include ../blocks/footer %>

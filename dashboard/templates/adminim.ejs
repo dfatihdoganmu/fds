@@ -1,0 +1,63 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<%- include('blocks/header', {bot, user, path}) %>
+<div class="container">
+  <%
+  let tema = '222'
+  let yazıTema = 'fff'
+  let array = []
+  let t
+  let a
+  if (bot.ayar.has(`panel_tema`) === true) {
+  for (var i = 0; i < bot.ayar.fetch('panel_tema').length; i++) { a = i }
+    tema = 'e5e5e5'
+    yazıTema = '000'
+    let t = '#a3a3a3'
+  }
+  %>
+	<div class="row justify-content-md-center">
+		<h1 class="display-3" style="color:#<%=yazıTema%>;">Sunucu Seçimi</h1>
+	</div>
+	<ul class="list-unstyled">
+		<% bot.guilds.forEach(guild => { %>
+			<div class="row justify-content-md-center">
+				<li class="media" style="padding: 10px;">
+					<div class="media-body" align="center" style="padding: 20px;">
+						<% if (guild.icon) { %>
+							<img class="d-flex mr-3 rounded-circle" src="<%= `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=128` %>" style="width: 80px;" alt="">
+						<% } else { %>
+							<canvas style="background-color: #7289da" class="d-flex mr-3 rounded-circle" id="<%= guild.name.split(' ').join('').replace(`'`, ``) %>" width="80px" height="80px"></canvas>
+							<script>
+								function draw() {
+									const ctx = document.getElementById("<%= guild.name.split(' ').join('').replace(`'`, ``) %>").getContext('2d');
+									ctx.font = '30px Arial';
+									ctx.textAlign = "center";
+									ctx.fillStyle = "white";
+									ctx.fillText("<%= guild.name.split(' ').map(v => v[0]).join('') %>", 40, 50);
+								};
+								draw();
+							</script>
+						<% } %>
+						<br><center><h5 class="mt-0 mb-1" style="color:#<%=yazıTema%>;">
+							<%= guild.name %>
+						</h5></center>
+						<% 
+							let href, text;
+							if(bot.guilds.get(guild.id)) {
+								href = `/panel/${guild.id}/ayarlar`;
+								text = "Panele Git";
+							} else {
+                            href = `https://discordapp.com/oauth2/authorize?client_id=${bot.user.id}&scope=bot&permissions=2146958847`;
+								text = "Botu Ekle";
+							}
+						%>
+						<div align="center">
+							<a style="background-color:" class="btn btn-success btn-lg" role="button" href="<%= href %>"> <%= text %> <i class="fa fa-fw fa-chevron-circle-right" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</li>
+			</div>
+		<% }); %>
+	</ul>
+</div>
+<% include ./blocks/footer %>

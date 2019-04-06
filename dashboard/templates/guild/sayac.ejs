@@ -1,0 +1,105 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<%- include('../blocks/header', {bot, user, path}) %>
+<div class="container">
+
+	<div class="row justify-content-md-center">
+		<div align="center"><h2 style="color: #fff;"><i class="fa fa-wrench fa-fw" aria-hidden="true"></i> Sayaç Sistemi</h2></div>
+  </div>
+	
+  <!--<center><h7 style="color:red">Bakımda...</h7></center>-->
+  
+	<div class="row">
+		
+
+<div class="col">
+    <div class="container">
+      <form method="post">
+        <ul class="list-group list-group-flush">
+          
+   <div class="row">
+            <div class="col-25">
+              <label for="sayacKanal">Sayaç</label>
+            </div>
+            <div class="col-75">
+              <select id="sayacKanal" name="sayacKanal" style="width: 49%;"> 
+           <%if(bot.ayar.has(`sKanal_${guild.id}`) === false) {%>
+                 <option value="" disabled selected>Kanal seçiniz.</option>
+                <%
+                for (var i = 0; i < guild.channels.filter(c => c.type==='text').size; i++){%>
+              
+                <option value="<%=guild.channels.filter(c => c.type==='text').array()[i].name%>">#<%=guild.channels.filter(c => c.type==='text').array()[i].name%></option>
+              <%  } %>
+           <%} else {%>
+               <option value="<%=guild.channels.get(bot.ayar.fetch(`sKanal_${guild.id}`)).name%>" selected>#<%=guild.channels.get(bot.ayar.fetch(`sKanal_${guild.id}`)).name%></option>
+   <%for (var i = 0; i < guild.channels.filter(c=>c.id!==bot.ayar.fetch(`sKanal_${guild.id}`)).filter(c => c.type==='text').size; i++){%>
+               
+        <option value="<%=guild.channels.filter(c=>c.id!==bot.ayar.fetch(`sKanal_${guild.id}`)).filter(c => c.type==='text').array()[i].name%>">#<%=guild.channels.filter(c=>c.id!==bot.ayar.fetch(`sKanal_${guild.id}`)).filter(c => c.type==='text').array()[i].name%></option>
+              <%  } %>
+                <%}%>
+              </select>
+
+             <% if (bot.ayar.has(`sayac_${guild.id}`) === false) { %>
+								<input type="number" style="width: 49%; text-align: left; float: right;" name="sayac" id="sayac"
+									placeholder="Bir sayı yazınız!">
+              <% } %>
+              
+							<% if(bot.ayar.has(`sayac_${guild.id}`) === true) { %>
+								<input type="number" style="width: 49%; text-align: left; float: right;" name="sayac" id="sayac" value="<%= bot.ayar.fetch(`sayac_${guild.id}`) %>"
+									placeholder="Bir sayı yazınız!">
+              <% } %>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-25">
+              <label for="sayacGiris">Sayaç Giriş Mesajı</label>
+            </div>
+            <div class="col-75">
+              
+              <% if (bot.ayar.has(`sayacGM_${guild.id}`) === false) { %>
+								<input type="text" style="text-align: left; height:100px;" name="sayacGiris" id="sayacGiris"
+									placeholder="Bir mesaj yazınız!">
+              <% } %>
+              
+							<% if(bot.ayar.has(`sayacGM_${guild.id}`) === true) { %>
+								<input type="text" style="text-align: left; height:100px;" name="sayacGiris" id="sayacGiris" value="<%= bot.ayar.fetch(`sayacGM_${guild.id}`) %>"
+									placeholder="Bir mesaj yazınız!">
+              <% } %>
+            </div>
+</div>
+
+<div class="row">
+            <div class="col-25">
+              <label for="sayacCikis">Sayaç Çıkış Mesajı</label>
+            </div>
+            <div class="col-75">
+              
+              <% if (bot.ayar.has(`sayacCM_${guild.id}`) === false) { %>
+								<input type="text" style="text-align: left; height:100px;" name="sayacCikis" id="sayacCikis"
+									placeholder="Bir mesaj yazınız!">
+              <% } %>
+              
+							<% if(bot.ayar.has(`sayacCM_${guild.id}`) === true) { %>
+								<input type="text" style="text-align: left; height:100px;" name="sayacCikis" id="sayacCikis" value="<%= bot.ayar.fetch(`sayacCM_${guild.id}`) %>"
+									placeholder="Bir mesaj yazınız!">
+              <% } %>
+            </div>
+</div>
+          
+          </ul>
+          <div style="width: 100%; text-align: right; margin-top: 15px;">
+    <button style="background-color:blue; color:#fff" type="sumbit" id="formbtn" class="btn btn-default"><i class="fa fa-fw fa-save" aria-hidden="true"></i> Kaydet</button>
+          </div>
+      </form>
+    </div>
+  </div>
+    
+</div>
+<% include ../blocks/guild-modals %>
+
+<script>
+	var ts = parseInt($('#guildCreate').text());
+	$('#guildCreate').html(`<strong>Created:</strong>: ${moment(ts).format('MMMM Do YYYY (h:mm a)')}`);  
+</script>
+<% include ../blocks/footer %>

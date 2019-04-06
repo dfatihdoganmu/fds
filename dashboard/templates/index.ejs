@@ -1,0 +1,22 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<%- include('blocks/header', {bot, user, path}) %>
+<div class="container">
+	<div class="jumbotron" style="background-color:#2a2d32;">
+		<div align="center">
+			<a style="color:#fff" class="nav-link"><img src="<%= bot.user.avatarURL %>" width="200" height="200" class="d-inline-block align-top rounded-circle" alt=""><br/><br/><font color="#78C2AD" size=20> <%= bot.user.username %></font></a><br>
+      <% if(!user) { %>
+      <a style="color:#fff" class="nav-link" href="/giris" role="button" target="_blank"><i class="fa fa-key fa-fw"></i> Giriş Yap</a>
+				<a style="color:#fff" class="nav-link" href="/komutlar" role="button"><i class="fa fa-book fa-fw"></i> Komutlar</a>
+			<% } else { %>
+				<a style="color:#fff" class="nav-link" href="/panel" role="button"><i class="fa fa-cogs fa-fw" aria-hidden="true"></i> Yönetim/Kontrol Paneli</a>
+				<% if(bot.ayarlar.sahip.includes(user.id)) { %>
+						<a style="color:#fff" class="nav-link" href="/yonetici" role="button"><i class="fa fa-key fa-fw" aria-hidden="true"></i> Yönetici Paneli</a>
+				<% } %>
+				<a style="color:#fff" class="nav-link" href="/komutlar" role="button"><i class="fa fa-book fa-fw"></i> Komutlar</a>
+				<a style="color:#fff" class="nav-link" href="/cikis" role="button"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Çıkış Yap</a>
+			<% } %>
+    </div>
+</div>
+</div>
+<% include ./blocks/footer %>

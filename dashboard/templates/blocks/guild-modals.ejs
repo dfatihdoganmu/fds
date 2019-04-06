@@ -1,0 +1,78 @@
+<%
+  let tema = '222'
+  let yazıTema = 'fff'
+  let array = []
+  let t
+  let a
+  if (bot.ayar.has(`panel_tema`) === true) {
+  for (var i = 0; i < bot.ayar.fetch('panel_tema').length; i++) { a = i }
+    tema = 'e5e5e5'
+    yazıTema = '000'
+    let t = '#a3a3a3'
+  }
+  %>
+
+<div class="modal fade" id="serverLeaveModal" tabindex="-1" role="dialog" aria-labelledby="serverLeaveModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" style="background-color:#<%=tema%>; color:#<%=yazıTema%>;">
+			<div class="modal-header" style="border: 0px;">
+				<h5 class="modal-title" id="serverLeaveModalLabel" style="background-color:#<%=tema%>; color:#<%=yazıTema%>;">Ama Neden?</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" style="background-color:#<%=tema%>; color: #<%=yazıTema%>;">
+				<p>
+					Gerçekten <%= bot.user.username %> botunu sunucundan atmak istiyor musun?
+				</p>
+			</div>
+			<div class="modal-footer" style="background-color: #<%=tema%>; color: #<%=yazıTema%>; border: 0px;">
+				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">İptal</button>
+				<a class="btn btn-outline-danger" href="/panel/<%= guild.id %>/leave" role="button">Evet Atılsın</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="settingsResetModal" tabindex="-1" role="dialog" aria-labelledby="settingsResetModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" style="background-color:#<%=tema%>; color:#<%=yazıTema%>;">
+			<div class="modal-header" style="border: 0px;">
+				<h5 class="modal-title" id="settingsResetModalLabel">Uyarı</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" style="background-color: #<%=tema%>; color: #<%=yazıTema%>;">
+				<p>
+					Gerçekten ayarları sıfırlamak istiyor musun? Evet Sıfırlansın butonuna bastığında sunucuda botun aktif tüm ayarları sıfırlanarak kapanacaktır.
+				</p>
+			</div>
+			<div class="modal-footer" style="background-color: #<%=tema%>; color: #<%=yazıTema%>; border: 0px;">
+				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">İptal</button>
+				<a class="btn btn-outline-danger" href="/panel/<%= guild.id %>/reset" role="button">Evet Sıfırlansın</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="settingsSaveModal" tabindex="-1" role="dialog" aria-labelledby="settingsSaveModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" style="background-color: #<%=tema%>; color: #<%=yazıTema%>;">
+			<div class="modal-header" style="border: 0px;">
+				<h5 class="modal-title" id="settingsSaveModalLabel">Başarılı</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" style="background-color: #<%=tema%>; color: #<%=yazıTema%>;">
+				<p>
+					Ayar başarıyla kaydedildi!
+				</p>
+			</div>
+			<div class="modal-footer" style="background-color: #<%=tema%>; color: #<%=yazıTema%>; border: 0px;">
+				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kapat</button>
+			</div>
+		</div>
+	</div>
+</div>

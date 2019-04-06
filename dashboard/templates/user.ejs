@@ -1,0 +1,73 @@
+<%- include('blocks/header', {bot, user, path}) %>
+<div class="container">
+  
+  <div class="row justify-content-md-center">
+		<h2 style="color: #fff;">Kullanıcı Yönetimi</h2>
+	</div>
+  
+  <div class="row justify-content-md-center">
+  <h3 style="color: #fff;"><%=member.tag%></h3>
+  </div>
+  
+	<div class="jumbotron" style="background-color: #525656;">
+		<div align="center">
+      
+      <canvas id="test" width="900px" height="400px"></canvas>
+      
+      <script>
+        var xp = 1;
+        var img = document.getElementById("av");
+        
+							function draw() {
+								const ctx = document.getElementById("test").getContext('2d');
+                
+                ctx.fillStyle = "rgba(0, 0, 0, 0.95)";
+  ctx.fill()
+	ctx.fillRect(25, 10, 700, 230)  //25, 20, 700, 260
+  
+  
+  
+	ctx.fillStyle = "rgba(0, 0, 0, 0.30)";
+	ctx.fill()
+	ctx.fillRect(0, 0, 750, 250)
+  
+  var de = 1.6
+	ctx.beginPath()
+	ctx.fillStyle = "#999999";
+	ctx.arc(257 + 18.5, 147.5 + 18.5 + 36.25, 18.5, 1.5 * Math.PI, 0.5 * Math.PI, true);
+	ctx.fill();
+	ctx.fillRect(257 + 18.5, 147.5 + 36.15, 250 * de, 37.5);
+	ctx.arc(257 + 18.5 + 250 * de, 147.5 + 18.5 + 36.25, 18.75, 1.5 * Math.PI, 0.5 * Math.PI, false);
+	ctx.fill();
+	ctx.beginPath();
+	ctx.fillStyle = "#<%=bot.ayar.fetch(`${member.id}.renk`) || 'ff0000'%>";
+	ctx.arc(257 + 18.5, 147.5 + 18.5 + 36.25, 18.5, 1.5 * Math.PI, 0.5 * Math.PI, true);
+	ctx.fill();
+	ctx.fillRect(257 + 18.5, 147.5 + 36.25, xp * de, 37.5);
+	ctx.arc(257 + 18.5 + xp * de, 147.5 + 18.5 + 36.25, 18.75, 1.5 * Math.PI, 0.5 * Math.PI, false);
+	ctx.fill();
+	ctx.fillStyle = "#<%=bot.ayar.fetch(`${member.id}.renk`) || 'ff0000'%>";
+  ctx.font = '28px Arial';
+  ctx.textAlign = "right";
+  ctx.fillStyle = "#<%=bot.ayar.fetch(`${member.id}.renk`) || 'ff0000'%>";
+	ctx.fillText("Sıralama #x | Seviye x", 700, 50);
+  ctx.font = '20px Arial';
+  ctx.textAlign = "right";
+  ctx.fillStyle= "#<%=bot.ayar.fetch(`${member.id}.renk`) || 'ff0000'%>";
+  ctx.fillText("x / 150 XP", 700, 80);
+  ctx.fillStyle = `#bfbfbf`;
+  ctx.font = '28px Arial';
+	ctx.textAlign = "left";
+	ctx.fillText('<%=member.tag%>', 210, 140)
+	ctx.beginPath();
+	ctx.lineWidth = 8;
+  ctx.fill()
+	ctx.lineWidth = 8;        
+	ctx.arc(55 + 80, 80 + 80, 80, 0, 2 * Math.PI, false);
+
+							};
+							draw();
+      </script>
+		</div>
+	</div>
+<% include ./blocks/footer %>

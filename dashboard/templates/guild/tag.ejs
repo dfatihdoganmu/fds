@@ -1,0 +1,68 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<%- include('../blocks/header', {bot, user, path}) %>
+<div class="container">
+
+	<div class="row justify-content-md-center">
+   <div align="center"><h2 style="color: #fff;"><i class="fa fa-wrench fa-fw" aria-hidden="true"></i> Tag Sistemi</h2></div>
+  </div>
+	
+  <!--<center><h7 style="color:red">Bakımda...</h7></center>-->
+  
+	<div class="row">
+    
+<div class="col">
+    <div class="container">
+      <form method="post">
+        <ul class="list-group list-group-flush">
+          
+         <div class="row">
+            <div class="col-25">
+              <label for="tag">Tag Sistemi</label>
+            </div>
+            <div class="col-75">
+             <% if (bot.ayar.has(`tag_${guild.id}`) === false) { %>
+								<input type="text" style="text-align: left; width:49%" name="tag" id="tag"
+									placeholder="Bir tag yazınız!">
+              <% } %>
+              
+							<% if(bot.ayar.has(`tag_${guild.id}`) === true) { %>
+								<input type="text" style="text-align: left; width:49%" name="tag" id="tag" value="<%= bot.ayar.fetch(`tag_${guild.id}`) %>"
+									placeholder="Bir tag yazınız!">
+              <% } %>
+              
+              <select id="tagkanal" name="tagkanal" style="width: 49%; float:right"> 
+           <%if(bot.ayar.has(`tagKanal_${guild.id}`) === false) {%>
+                 <option value="" disabled selected>Kanal seçiniz.</option>
+                <%
+                for (var i = 0; i < guild.channels.filter(c => c.type==='text').size; i++){%>
+              
+                <option value="<%=guild.channels.filter(c => c.type==='text').array()[i].name%>">#<%=guild.channels.filter(c => c.type==='text').array()[i].name%></option>
+              <%  } %>
+           <%} else {%>
+               <option value="<%=guild.channels.get(bot.ayar.fetch(`tagKanal_${guild.id}`)).name%>" selected>#<%=guild.channels.get(bot.ayar.fetch(`tagKanal_${guild.id}`)).name%></option>
+             <%for (var i = 0; i < guild.channels.filter(c=>c.id!==bot.ayar.fetch(`tagKanal_${guild.id}`)).filter(c => c.type==='text').size; i++){%>
+               
+                <option value="<%=guild.channels.filter(c=>c.id!==bot.ayar.fetch(`tagKanal_${guild.id}`)).filter(c => c.type==='text').array()[i].name%>">#<%=guild.channels.filter(c=>c.id!==bot.ayar.fetch(`tagKanal_${guild.id}`)).filter(c => c.type==='text').array()[i].name%></option>
+              <%  } %>
+                <%}%>
+              </select>
+            </div>
+          </div>
+          
+          </ul>
+          <div style="width: 100%; text-align: right; margin-top: 15px;">
+    <button style="background-color:blue; color:#fff" type="sumbit" id="formbtn" class="btn btn-default"><i class="fa fa-fw fa-save" aria-hidden="true"></i> Kaydet</button>
+          </div>
+      </form>
+    </div>
+  </div>
+    
+</div>
+<% include ../blocks/guild-modals %>
+
+<script>
+	var ts = parseInt($('#guildCreate').text());
+	$('#guildCreate').html(`<strong>Created:</strong>: ${moment(ts).format('MMMM Do YYYY (h:mm a)')}`);  
+</script>
+<% include ../blocks/footer %>

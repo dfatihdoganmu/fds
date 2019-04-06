@@ -1,0 +1,129 @@
+<%
+  let tema = '222'
+  let yazıTema = 'fff'
+  let array = []
+  let t
+  let a
+  if (bot.ayar.has(`panel_tema`) === true) {
+  for (var i = 0; i < bot.ayar.fetch('panel_tema').length; i++) { a = i }
+    tema = 'e5e5e5'
+    yazıTema = '000'
+    let t = '#a3a3a3'
+  }
+  %>
+
+<div class="card" style="width: 20rem; background-color:#<%=tema%>">
+  
+<% if (guild.icon) { %>
+		<img style="width: 100%;" src="<%= `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=256` %>" alt="">
+	<% } else { %>
+		<canvas class="d-inline-block align-top rounded-circle" style="background-color: #7289da" id="<%= guild.name.split(' ').join('').replace(`'`, ``) %>" width="256px" height="320px"></canvas>
+		<script>
+			function draw() {
+				const ctx = document.getElementById("<%= guild.name.split(' ').join('').replace(`'`, ``) %>").getContext('2d');
+				ctx.font = '95px Arial';
+				ctx.textAlign = "center";
+				ctx.fillStyle = "white";
+				ctx.fillText("<%= guild.name.split(' ').map(v => v[0]).join('') %>", 125, 185);
+			};
+			draw();
+		</script>
+	<% } %>
+  
+  <%
+				let region = {
+					"us-central": "Amerika",
+					"us-east": "Doğu Amerika",
+					"us-south": "Güney Amerika",
+					"us-west": "Batı Amerika",
+					"eu-west": "Batı Avrupa",
+					"eu-central": "Avrupa",
+					"singapore": "Singapur",
+					"london": "Londra",
+					"japan": "Japonya",
+					"russia": "Rusya",
+					"hongkong": "Hong Kong",
+					"brazil": "Brezilya",
+					"singapore": "Singapur",
+					"sydney": "Sidney",
+					"southafrica": "Güney Afrika"
+				} %>
+  
+  <div class="card-block">
+    <h5 class="card-title" style="padding-top: 15px">
+      <center>
+       <%=guild.name%>
+      </center>
+    </h5>
+    <ul class="list-group list-group-flush" style="width: 100%">
+      <li class="list-group-item" style="width: 100%; background-color:#<%=tema%>">
+        <i class="fa fa-user fa-fw" aria-hidden="true"></i>
+        <strong>Sunucu Sahibi</strong>:
+        <span style="float:right">
+         <%=guild.owner.user.tag%></span>
+      </li>
+      <li class="list-group-item" style="width: 100%; background-color:#<%=tema%>">
+        <i class="fa fa-fw fa-tasks" aria-hidden="true"></i>
+        <strong>Sunucu ID</strong>:
+        <span style="float:right">
+          <%=guild.id%></span>
+      </li>
+      <li class="list-group-item" style="width: 100%; background-color:#<%=tema%>">
+        <i class="fa fa-fw fa-globe" aria-hidden="true"></i>
+        <strong>Sunucu Bölgesi</strong>:
+        <span style="float:right">
+          <%=region[guild.region]%></span>
+      </li>
+      <li class="list-group-item" style="width: 100%; background-color:#<%=tema%>">
+        <i class="fa fa-fw fa-clock-o" aria-hidden="true"></i>
+        <strong>Kurulduğu Tarih</strong>:
+        <span style="float:right" id="guildCreatee">
+          <%=guild.createdTimestamp%></span>
+      </li>
+      <li class="list-group-item" style="background-color:#<%=tema%>">
+        <i class="fa fa-fw fa-users" aria-hidden="true"></i>
+        <strong>Üyeler</strong>:
+        <span style="float:right">
+          <%=guild.members.size%> Üye | <a style="color:lightblue" href="/panel/<%=guild.id%>/uyeler">Üye Listesi</a></span>
+      </li>
+      <li class="list-group-item" style="background-color:#<%=tema%>">
+        <i class="fa fa-fw fa-at" aria-hidden="true"></i>
+        <strong>Rol Sayısı</strong>:
+        <span style="float:right">
+          <%=guild.roles.size%></span>
+      </li>
+      <li class="list-group-item" style="background-color:#<%=tema%>">
+        <i class="fa fa-fw fa-hashtag" aria-hidden="true"></i>
+        <strong>Kanal Sayısı</strong>:
+        <span style="float:right">
+          <%=guild.channels.size%></span>
+      </li>
+      
+    </ul>
+    <br>
+    <center>
+      <a class="btn btn-danger" style="background-color:red; color: white;" data-toggle="modal" data-target="#serverLeaveModal" role="button"><i class="fa fa-fw fa-sign-out" aria-hidden="true"></i> Botu At
+      </a>
+    </center>
+  </div>
+  <br>
+  </div>
+
+<script>
+  let kur = {
+			"01": "Ocak",
+			"02": "Şubat",
+			"03": "Mart",
+			"04": "Nisan",
+			"05": "Mayıs",
+			"06": "Haziran",
+			"07": "Temmuz",
+			"08": "Ağustos",
+			"09": "Eylül",
+			"10": "Ekim",
+			"11": "Kasım",
+			"12": "Aralık"
+	}
+	var ts = parseInt($('#guildCreatee').text());
+	$('#guildCreatee').html(`<strong>${moment(ts).format('DD')} ${kur[moment(ts).format('MM')]} ${moment(ts).format('YYYY h:mm:ss')}</strong>`);
+</script>
